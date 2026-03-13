@@ -1,0 +1,90 @@
+{
+	"name": "Adaptive Approvals: Manager and Manager_Plus_One",
+	"description": "Uses Adaptive Approvals to do a parallel approval requiring Manager and Manager_Plus_One",
+	"modified": "2026-03-13T15:14:29.883481813Z",
+	"modifiedBy": {
+		"type": "IDENTITY",
+		"id": "xxxxxxxxxxxxxxxxxxxxxxxxx",
+		"name": "xxxxxxxxxxx"
+	},
+	"definition": {
+		"start": "Get Identity",
+		"steps": {
+			"Approval Policy": {
+				"actionId": "sp:access-request-approval",
+				"attributes": {
+					"accessRequestId.$": "$.trigger.accessRequestId",
+					"accountActivityId.$": "$.trigger.accountActivityId",
+					"approvalActionAtTimeout": "EXPIRED",
+					"approvalReminder": "true",
+					"approvalTimeout": 14,
+					"approvalType": "MULTI-STEP",
+					"autoApprovalEnabled.$": "$.trigger.autoApprove",
+					"fallbackApprover.$": "$.trigger.fallbackApprover",
+					"multiApproverReviewersConfig_approvalScheme": "PARALLEL",
+					"multiApproverReviewersConfig_reviewers": [
+						{
+							"approverCategory": "MANAGER_OF",
+							"approverNumber": 1
+						},
+						{
+							"approverCategory": "IDENTITY",
+							"approverNumber": 2,
+							"identityId.$": "$.getIdentity.attributes.managerPlusOneIscId"
+						}
+					],
+					"parentWorkflowExecutionId.$": "$.trigger.parentWorkflowExecutionId",
+					"priority": "MEDIUM",
+					"quorumApproverReviewersConfig_approvalScheme": "SERIAL",
+					"reminderFrequency_cronString": "0 8 * * 1",
+					"reminderFrequency_frequency": "weekly",
+					"reminderFrequency_timeZone": "America/Chicago",
+					"reminderFrequency_weeklyDays": [
+						"Monday"
+					],
+					"reminderFrequency_weeklyTimes": [
+						"1969-12-31T14:00:00.000Z"
+					],
+					"requestId.$": "$.trigger.requestId",
+					"requestedAt.$": "$.trigger.createdAt",
+					"requestedBy.$": "$.trigger.requestedBy",
+					"requestedFor.$": "$.trigger.requestedFor",
+					"requestedItem.$": "$.trigger.requestedItem",
+					"sodViolationContext.$": "$.trigger.sodViolationContext",
+					"staticAttributes.$": "$.trigger.staticAttributes",
+					"workflowExecutionId.$": "$.trigger.workflowExecutionId"
+				},
+				"displayName": "",
+				"nextStep": "End Step - Success",
+				"type": "action",
+				"versionNumber": 1
+			},
+			"End Step - Success": {
+				"actionId": "sp:operator-success",
+				"displayName": "",
+				"type": "success"
+			},
+			"Get Identity": {
+				"actionId": "sp:get-identity",
+				"attributes": {
+					"id.$": "$.trigger.requestedFor.id"
+				},
+				"displayName": "",
+				"nextStep": "Approval Policy",
+				"type": "action",
+				"versionNumber": 2
+			}
+		}
+	},
+	"creator": {
+		"type": "IDENTITY",
+		"id": "xxxxxxxxxxxxxxxxxxxxxxxxx",
+		"name": "xxxxxxxxxxxxxxxxxxxx"
+	},
+	"trigger": {
+		"type": "AccessRequestTrigger",
+		"attributes": {
+			"id": "idn:access-request-trigger"
+		}
+	}
+}
