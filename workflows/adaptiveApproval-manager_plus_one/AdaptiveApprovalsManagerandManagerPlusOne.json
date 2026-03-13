@@ -1,12 +1,6 @@
 {
 	"name": "Adaptive Approvals: Manager and Manager_Plus_One",
 	"description": "Uses Adaptive Approvals to do a parallel approval requiring Manager and Manager_Plus_One",
-	"modified": "2026-03-13T15:14:29.883481813Z",
-	"modifiedBy": {
-		"type": "IDENTITY",
-		"id": "xxxxxxxxxxxxxxxxxxxxxxxxx",
-		"name": "xxxxxxxxxxx"
-	},
 	"definition": {
 		"start": "Get Identity",
 		"steps": {
@@ -75,11 +69,6 @@
 				"versionNumber": 2
 			}
 		}
-	},
-	"creator": {
-		"type": "IDENTITY",
-		"id": "xxxxxxxxxxxxxxxxxxxxxxxxx",
-		"name": "xxxxxxxxxxxxxxxxxxxx"
 	},
 	"trigger": {
 		"type": "AccessRequestTrigger",
